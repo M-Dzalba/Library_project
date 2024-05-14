@@ -8,7 +8,26 @@
 <body>
 <p th:text="${book.getTitle() + ', ' + book.getAuthor()+ ', ' + book.getYear()}">VALUE</p>
 
+<div th:if="${owner}">
+    <span>The book is now with: </span> <span th:text="${owner.getName()}">Person name</span>
 
+    <form th:method="PATCH" th:action="@{/books/{id}/release(id=${book.getBook_id()})}">
+        <input type="submit" value="Release the book"/>
+    </form>
+</div>
+
+<div th:if="${people}">
+    <span>This book is free. Who should I assign it to?</span>
+<form th:method="PATCH" th:action="@{/books/{id}/assign(id=${book.getBook_id()})}">
+    <label for="person">Select person: </label>
+    <select th:object="${person}" th:field="*{person_id}" id="person">
+        <option th:each="person: ${people}" th:value="${person.getPerson_id()}" th:text="${person.getName()}">
+        </option>
+    </select>
+    <input type="submit" value="Assign book"/>
+</form>
+</div>
+<hr/>
 
 <form th:method="GET" th:action="@{/books/{id}/edit(id=${book.getBook_id()})}">
     <input type="submit" value="Edit"/>

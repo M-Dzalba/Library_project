@@ -8,6 +8,7 @@ import ru.dzalba.models.Book;
 import ru.dzalba.models.Person;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class BookDAO {
@@ -44,4 +45,15 @@ public class BookDAO {
         jdbcTemplate.update("DELETE FROM book WHERE book_id=?",id);
     }
 
+    public Optional<Person> getBookOwner(int id) {
+        return jdbcTemplate.query("SELECT Person.* FROM Book JOIN Person ON Book.person_id=Person.person_id "+
+                "WHERE Book.book_id=?",new Object[]{id},new BeanPropertyRowMapper<>(Person.class)).stream().findAny();
+    }
+    public void release(int id) {
+        jdbcTemplate.update("UPDATE book SET person_id=NULL WHERE book_id=?",id);
+    }
+
+    public void assign(int id, Person selectedPerson) {
+        jdbcTemplate.update("UPDATE book SET person_id=? WHERE book_id=?",selectedPerson.getPerson_id(),id);
+    }
 }
