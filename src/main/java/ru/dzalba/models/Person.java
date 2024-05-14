@@ -24,23 +24,13 @@ public class Person {
         return person_id;
     }
 
-    public void setPerson_id(int person_id) {
-        this.person_id = person_id;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public int getYearOfBirth() {
         return yearOfBirth;
     }
 
-    public void setYearOfBirth(int yearOfBirth) {
-        this.yearOfBirth = yearOfBirth;
-    }
 }
